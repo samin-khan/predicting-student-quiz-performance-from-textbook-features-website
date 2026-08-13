@@ -29,6 +29,7 @@ main {
 }
 
 .hero { text-align: center; margin-bottom: 42px; }
+.byline { margin: 14px 0 0; color: var(--muted); font-size: 14px; font-weight: 650; }
 .eyebrow, .label {
   margin: 0 0 8px;
   color: var(--muted);
@@ -211,6 +212,7 @@ h2 { margin: 0; font-size: 24px; line-height: 1.25; letter-spacing: -.02em; }
 .results { display: grid; gap: 22px; }
 .results[hidden] { display: none; }
 .result-card, .feature-card, .why-card { padding: 26px; }
+.metric-footnote { margin: 18px 0 0; color: var(--muted); font-size: 11px; line-height: 1.5; }
 .section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
 .headline-stat { text-align: right; white-space: nowrap; }
 .headline-stat strong { display: block; color: var(--accent); font-size: 34px; line-height: 1; }
