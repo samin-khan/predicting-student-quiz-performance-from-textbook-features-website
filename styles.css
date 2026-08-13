@@ -46,7 +46,7 @@ h1 {
   letter-spacing: -.045em;
 }
 
-.study-card, .result-card, .feature-card, .transfer-card, .why-card {
+.study-card, .result-card, .feature-card, .why-card {
   border: 1px solid var(--line);
   border-radius: 16px;
   background: var(--surface);
@@ -71,17 +71,6 @@ h1 {
   font-weight: 750;
   letter-spacing: .08em;
   text-transform: uppercase;
-}
-.question-example {
-  padding-bottom: 14px;
-  border-bottom: 1px solid var(--line);
-}
-.question-example > p:last-child {
-  margin: 0;
-  color: var(--ink);
-  font-size: 15px;
-  font-weight: 650;
-  line-height: 1.4;
 }
 .actual-performance {
   margin-top: 18px;
@@ -129,6 +118,13 @@ h1 {
 }
 .context-preview[hidden] { display: none; }
 .context-preview > p:last-child { margin: 9px 0 0; }
+.context-preview .example-question-copy {
+  margin: 0 0 12px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 650;
+  line-height: 1.4;
+}
 .context-tag {
   display: inline-block;
   color: var(--muted);
@@ -214,7 +210,7 @@ h2 { margin: 0; font-size: 24px; line-height: 1.25; letter-spacing: -.02em; }
 
 .results { display: grid; gap: 22px; }
 .results[hidden] { display: none; }
-.result-card, .feature-card, .transfer-card, .why-card { padding: 26px; }
+.result-card, .feature-card, .why-card { padding: 26px; }
 .section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; }
 .headline-stat { text-align: right; white-space: nowrap; }
 .headline-stat strong { display: block; color: var(--accent); font-size: 34px; line-height: 1; }
@@ -263,11 +259,8 @@ h2 { margin: 0; font-size: 24px; line-height: 1.25; letter-spacing: -.02em; }
 .weight-row strong { padding-left: 9px; font-size: 11px; font-variant-numeric: tabular-nums; }
 .chart-note { margin: 18px 0 0; color: var(--muted); font-size: 12px; }
 
-.transfer-card { display: grid; gap: 8px; }
-.transfer-outcome { max-width: 760px; color: var(--accent); font-size: clamp(30px, 5vw, 46px); line-height: 1.08; letter-spacing: -.035em; }
-.positive { color: var(--accent); }
-.negative { color: var(--warning); }
 .why-card { background: var(--accent-soft); border-color: #c9e8e1; }
+.why-outcome { display: block; max-width: 760px; margin: 4px 0 18px; color: var(--accent); font-size: clamp(30px, 5vw, 46px); line-height: 1.08; letter-spacing: -.035em; }
 .why-card p:last-child { max-width: 760px; margin: 12px 0 0; color: #315f58; }
 
 footer { display: flex; justify-content: center; gap: 22px; padding: 34px 0 0; }
