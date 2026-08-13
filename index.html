@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="An interactive explanation of predicting CourseKata quiz scores from prior performance and textbook content features."
+    />
+    <title>Predicting CourseKata Quiz Scores with Textbook Context</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main>
+      <header class="hero">
+        <p class="eyebrow">Research demo</p>
+        <h1>Predicting CourseKata quiz scores from student history and textbook content</h1>
+      </header>
+
+      <section class="study-card" aria-labelledby="study-title">
+        <div class="comparison-panel">
+          <h2 id="study-title">Four models for predicting student performance</h2>
+          <p class="question-copy">
+            Select a model to see the information it receives and the quiz-score prediction it makes.
+          </p>
+
+          <div class="model-options" role="tablist" aria-label="Model feature sets">
+            <button class="model-option selected" data-model="base" role="tab" aria-selected="true">
+              <span class="option-name">Baseline</span>
+              <span class="option-detail">Past performance only</span>
+            </button>
+            <button class="model-option" data-model="image" role="tab" aria-selected="false">
+              <span class="option-name">Baseline + question images</span>
+              <span class="option-detail">Past performance and visual features</span>
+            </button>
+            <button class="model-option" data-model="text" role="tab" aria-selected="false">
+              <span class="option-name">Baseline + question text</span>
+              <span class="option-detail">Past performance and question wording</span>
+            </button>
+            <button class="model-option" data-model="full" role="tab" aria-selected="false">
+              <span class="option-name">Baseline + question text + question images <em>Closest</em></span>
+              <span class="option-detail">All available signals</span>
+            </button>
+          </div>
+
+          <div class="actual-performance">
+            <p class="preview-kicker">Actual student performance</p>
+            <div><strong>78%</strong><span>end-of-chapter quiz score</span></div>
+          </div>
+        </div>
+
+        <div class="model-input-panel" data-model="base" aria-live="polite">
+          <div class="question-example">
+            <p class="preview-kicker">Question being predicted</p>
+            <p>Which labeled value is closest to the center of the distribution?</p>
+          </div>
+
+          <div class="input-heading">
+            <div>
+              <p class="preview-kicker">Data provided to the model</p>
+              <h3 id="selected-model-name">Baseline</h3>
+            </div>
+            <span id="closest-badge" class="closest-badge" hidden>Closest</span>
+          </div>
+
+          <div class="baseline-input">
+            <span>Average correctness on prior exercises in this chapter</span>
+            <strong>72%</strong>
+          </div>
+
+          <div class="context-preview" data-preview="base">
+            <span class="context-tag">Baseline only</span>
+            <p>No textbook-content features are provided.</p>
+          </div>
+
+          <div class="context-preview image-preview" data-preview="image" hidden>
+            <p class="preview-kicker">Question image context</p>
+            <img
+              src="assets/edge-image.png"
+              alt="A textbook question image processed with edge detection, showing chart lines, labels, and answer regions."
+            />
+            <p><strong>532</strong> detected lines · <strong>58</strong> visual regions · <strong>1</strong> question image</p>
+          </div>
+
+          <div class="context-preview text-preview" data-preview="text" hidden>
+            <p class="preview-kicker">Question text context</p>
+            <div class="feature-list" aria-label="Extracted question text features">
+              <span><b>11</b> words</span>
+              <span><b>4.9</b> average word length</span>
+            </div>
+          </div>
+
+          <div class="context-preview full-preview" data-preview="full" hidden>
+            <p class="preview-kicker">Question text + question image context</p>
+            <div class="full-preview-grid">
+              <img
+                src="assets/edge-image.png"
+                alt="A compact view of question image-feature extraction from a textbook question."
+              />
+              <div>
+                <strong>Question text signals</strong>
+                <span>11 words · 4.9 average word length</span>
+                <strong>Question image signals</strong>
+                <span>532 lines · 58 regions · 1 question image</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="prediction-output">
+            <div>
+              <p class="preview-kicker">Predicted student score</p>
+              <strong id="prediction-value">72%</strong>
+            </div>
+            <span id="prediction-delta">6 percentage points from actual</span>
+          </div>
+        </div>
+      </section>
+
+      <button id="reveal" class="reveal-button">See How the Models Compare</button>
+
+      <section id="results" class="results" hidden aria-live="polite">
+        <article class="result-card">
+          <div class="section-heading">
+            <div>
+              <h2>Content makes prediction more accurate</h2>
+            </div>
+            <div class="headline-stat">
+              <strong>9.1%</strong>
+              <span>lower MSE</span>
+            </div>
+          </div>
+
+          <div class="bars" aria-label="Mean squared error by model">
+            <div class="bar-row" data-row="base">
+              <div class="bar-label"><span>Prior performance</span><strong>0.02496</strong></div>
+              <div class="track"><div class="bar" style="--value: 100%"></div></div>
+            </div>
+            <div class="bar-row" data-row="image">
+              <div class="bar-label"><span>+ Question images</span><strong>0.02425</strong></div>
+              <div class="track"><div class="bar" style="--value: 97.1%"></div></div>
+            </div>
+            <div class="bar-row" data-row="text">
+              <div class="bar-label"><span>+ Question text</span><strong>0.02275</strong></div>
+              <div class="track"><div class="bar" style="--value: 91.1%"></div></div>
+            </div>
+            <div class="bar-row best" data-row="full">
+              <div class="bar-label"><span>+ Question text + question images <em>Best</em></span><strong>0.02270</strong></div>
+              <div class="track"><div class="bar" style="--value: 90.9%"></div></div>
+            </div>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="section-heading feature-heading">
+            <div>
+              <p class="label">Absolute standardized ridge coefficients · full model</p>
+              <h2>Features Predictive of Student Performance</h2>
+            </div>
+            <div class="weight-legend" aria-label="Coefficient direction legend">
+              <span><i class="positive-key"></i>Positive coefficient</span>
+              <span><i class="negative-key"></i>Negative coefficient</span>
+            </div>
+          </div>
+          <div class="weight-chart" role="img" aria-label="Absolute standardized coefficient magnitudes shown on one shared scale. Positive coefficients are green and negative coefficients are coral. Word count 0.183, complex words 0.167, prior exercise score 0.116, question image lines 0.033, word rarity 0.016, question image regions 0.015, average word length 0.003, and question image count 0.002.">
+            <div class="weight-row" data-feature="text">
+              <span class="weight-name">Word count</span>
+              <span class="magnitude-track"><i class="positive-bar" style="--weight: 91.5%"></i></span>
+              <strong>0.183</strong>
+            </div>
+            <div class="weight-row" data-feature="text">
+              <span class="weight-name">Complex words</span>
+              <span class="magnitude-track"><i class="negative-bar" style="--weight: 83.5%"></i></span>
+              <strong>0.167</strong>
+            </div>
+            <div class="weight-row" data-feature="base">
+              <span class="weight-name">Prior exercise score</span>
+              <span class="magnitude-track"><i class="positive-bar" style="--weight: 58%"></i></span>
+              <strong>0.116</strong>
+            </div>
+            <div class="weight-row" data-feature="image">
+              <span class="weight-name">Question image lines</span>
+              <span class="magnitude-track"><i class="positive-bar" style="--weight: 16.5%"></i></span>
+              <strong>0.033</strong>
+            </div>
+            <div class="weight-row" data-feature="text">
+              <span class="weight-name">Word rarity</span>
+              <span class="magnitude-track"><i class="negative-bar" style="--weight: 8%"></i></span>
+              <strong>0.016</strong>
+            </div>
+            <div class="weight-row" data-feature="image">
+              <span class="weight-name">Question image regions</span>
+              <span class="magnitude-track"><i class="negative-bar" style="--weight: 7.5%"></i></span>
+              <strong>0.015</strong>
+            </div>
+            <div class="weight-row" data-feature="text">
+              <span class="weight-name">Average word length</span>
+              <span class="magnitude-track"><i class="positive-bar" style="--weight: 1.5%"></i></span>
+              <strong>0.003</strong>
+            </div>
+            <div class="weight-row" data-feature="image">
+              <span class="weight-name">Question image count</span>
+              <span class="magnitude-track"><i class="negative-bar" style="--weight: 1%"></i></span>
+              <strong>0.002</strong>
+            </div>
+          </div>
+
+          <p class="chart-note">Larger values indicate features with stronger influence on the model's predictions. These coefficients describe correlations, not what causes student performance.</p>
+        </article>
+
+        <article class="transfer-card">
+          <p class="label">Held-out chapter · new curriculum</p>
+          <strong class="transfer-outcome">8.7% lower error when using question text features</strong>
+        </article>
+
+        <article class="why-card">
+          <p class="label">Why this matters</p>
+          <h2>Student history is only part of the prediction problem.</h2>
+          <p>
+            Question text and question images contain useful context about how
+            students will perform. This experiment suggests that future student
+            performance prediction models should incorporate content from the
+            questions into the models they develop.
+          </p>
+        </article>
+      </section>
+
+      <footer>
+        <a href="https://arxiv.org/pdf/2606.24770" target="_blank" rel="noreferrer">Read the paper</a>
+        <a href="https://github.com/samin-khan/predicting-student-quiz-performance-from-textbook-features" target="_blank" rel="noreferrer">View the code</a>
+      </footer>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
